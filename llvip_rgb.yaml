@@ -1,0 +1,7 @@
+path: /Users/umbrien/CodeProjects/diplom6/LLVIP
+train: images/train
+val: images/test
+test: images/test
+
+names:
+  0: person

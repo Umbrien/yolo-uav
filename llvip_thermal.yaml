@@ -1,0 +1,7 @@
+path: LLVIP
+train: infrared/train
+val: infrared/test
+test: infrared/test
+
+names:
+  0: person

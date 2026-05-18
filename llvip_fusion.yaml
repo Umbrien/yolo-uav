@@ -1,0 +1,7 @@
+path: LLVIP
+train: fusion_early/images/train
+val: fusion_early/images/test
+test: fusion_early/images/test
+
+names:
+  0: person
