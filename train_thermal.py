@@ -8,13 +8,13 @@ def run_thermal_experiment():
     torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
-    print(f"🚀 Експеримент 2 (Thermal Only) на пристрої: {device}")
+    print(f"Experiment 2 (Thermal Only) on device: {device}")
 
     model = YOLO('yolov13n.pt')
     yaml_path = os.path.abspath('llvip_thermal.yaml')
 
     try:
-        print("▶️ Починаємо тренування на ТЕПЛОВИХ даних...")
+        print("Starting training on THERMAL data...")
         results = model.train(
             data=yaml_path,
             epochs=5,
@@ -30,7 +30,7 @@ def run_thermal_experiment():
             plots=False
         )
 
-        print("✅ Тренування завершено! Валідація...")
+        print("Training completed! Validation...")
 
         best_model = YOLO(os.path.join(results.save_dir, 'weights', 'last.pt'))
 
@@ -43,11 +43,11 @@ def run_thermal_experiment():
             device=device
         )
 
-        print(f"\n🌡️ Результати Тепловізора:")
+        print(f"\nThermal Results:")
         print(f"mAP50: {metrics.box.map50:.4f}")
 
     except Exception as e:
-        print(f"❌ Помилка: {e}")
+        print(f"Error: {e}")
 
 if __name__ == '__main__':
     run_thermal_experiment()

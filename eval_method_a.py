@@ -7,14 +7,14 @@ def evaluate_safely():
     torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
-    print(f"🚀 Використовуємо: {device}")
+    print(f"Using device: {device}")
 
     model_path = 'diploma_experiments/method_a_rgb/weights/best.pt'
 
-    print(f"📂 Завантаження ваг: {model_path}")
+    print(f"Loading weights: {model_path}")
     model = YOLO(model_path)
 
-    print("▶️ Починаємо розрахунок точності (mAP)...")
+    print("Starting accuracy calculation (mAP)...")
 
     metrics = model.val(
         data='llvip_rgb.yaml',
@@ -27,9 +27,9 @@ def evaluate_safely():
         plots=True
     )
 
-    print(f"\n✅ Результати Методу А (RGB):")
-    print(f"mAP50 (Точність): {metrics.box.map50:.4f}")
-    print(f"mAP50-95 (Сувора точність): {metrics.box.map:.4f}")
+    print(f"\nMethod A Results (RGB):")
+    print(f"mAP50 (Accuracy): {metrics.box.map50:.4f}")
+    print(f"mAP50-95 (Strict Accuracy): {metrics.box.map:.4f}")
 
 if __name__ == '__main__':
     evaluate_safely()

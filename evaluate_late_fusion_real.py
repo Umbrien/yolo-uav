@@ -52,7 +52,7 @@ def match_predictions(pred_classes, true_classes, iou, iouv):
 def run_evaluation():
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
     if torch.cuda.is_available(): device = 'cuda'
-    print(f"🚀 Using device: {device}")
+    print(f"Using device: {device}")
 
     model_rgb = YOLO(RGB_MODEL_PATH)
     model_th = YOLO(THERMAL_MODEL_PATH)
@@ -112,7 +112,7 @@ def run_evaluation():
         all_fused_preds.append(t_pred)
         all_gt.append({'boxes': t_gt_boxes, 'cls': t_gt_cls})
 
-    print("\n📊 Calculating final metrics...")
+    print("\nCalculating final metrics...")
     metrics = DetMetrics(names={0: 'person'})
     iouv = torch.linspace(0.5, 0.95, 10).to(device)
 
@@ -164,7 +164,7 @@ def run_evaluation():
 
         metrics.process()
 
-        print(f"\n🏆 LATE FUSION RESULTS:")
+        print(f"\nLATE FUSION RESULTS:")
         print(f"mAP50: {metrics.box.map50:.4f}")
         print(f"mAP50-95: {metrics.box.map:.4f}")
     else:

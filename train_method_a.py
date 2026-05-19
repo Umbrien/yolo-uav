@@ -8,13 +8,13 @@ def run_method_a():
     torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
-    print(f"🚀 Пристрій: {device}")
+    print(f"Device: {device}")
 
     model = YOLO('yolov13n.pt')
     yaml_path = os.path.abspath('llvip_rgb.yaml')
 
     try:
-        print("▶️ Починаємо тренування (без проміжної валідації)...")
+        print("Starting training (without intermediate validation)...")
         results = model.train(
             data=yaml_path,
             epochs=5,
@@ -31,7 +31,7 @@ def run_method_a():
             plots=False
         )
 
-        print("✅ Тренування завершено! Виконуємо фінальну перевірку...")
+        print("Training completed! Performing final check...")
 
         best_model = YOLO(os.path.join(results.save_dir, 'weights', 'last.pt'))
 
@@ -44,10 +44,10 @@ def run_method_a():
             device=device
         )
 
-        print(f"🏆 Результат mAP50: {metrics.box.map50}")
+        print(f"mAP50 Result: {metrics.box.map50}")
 
     except Exception as e:
-        print(f"❌ Помилка: {e}")
+        print(f"Error: {e}")
 
 if __name__ == '__main__':
     run_method_a()

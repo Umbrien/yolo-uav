@@ -36,8 +36,8 @@ def plot_diploma_results():
 
     ax.set_ylim(85, 97)
     ax.set_ylabel('Mean Average Precision (mAP50), %', fontsize=12, fontweight='bold')
-    ax.set_xlabel('Метод детекції', fontsize=12, fontweight='bold')
-    plt.title('Порівняння точності методів детекції людей (LLVIP Dataset)', fontsize=14, pad=20)
+    ax.set_xlabel('Detection Method', fontsize=12, fontweight='bold')
+    plt.title('Comparison of Human Detection Method Accuracy (LLVIP Dataset)', fontsize=14, pad=20)
 
     for p in ax.patches:
         height = p.get_height()
@@ -64,7 +64,7 @@ def plot_diploma_results():
 
     output_file = 'results_chart.png'
     plt.savefig(output_file, dpi=300)
-    print(f"✅ Графік збережено як {output_file}")
+    print(f"Chart saved as {output_file}")
     plt.show()
 
 if __name__ == "__main__":

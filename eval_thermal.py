@@ -8,18 +8,18 @@ def evaluate_thermal():
     torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
-    print(f"🚀 Використовуємо: {device}")
+    print(f"Using device: {device}")
 
     model_path = 'diploma_experiments/method_thermal_only/weights/best.pt'
 
     if not os.path.exists(model_path):
-        print(f"❌ Помилка: Не знайдено файл {model_path}")
+        print(f"Error: File not found {model_path}")
         return
 
-    print(f"📂 Завантаження ваг: {model_path}")
+    print(f"Loading weights: {model_path}")
     model = YOLO(model_path)
 
-    print("▶️ Починаємо розрахунок точності (Thermal mAP)...")
+    print("Starting accuracy calculation (Thermal mAP)...")
 
     metrics = model.val(
         data='llvip_thermal.yaml',
@@ -32,7 +32,7 @@ def evaluate_thermal():
         plots=True
     )
 
-    print(f"\n🌡️ Результати Тепловізора:")
+    print(f"\nThermal Results:")
     print(f"mAP50: {metrics.box.map50:.4f}")
     print(f"mAP50-95: {metrics.box.map:.4f}")
 

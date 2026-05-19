@@ -21,11 +21,11 @@ def create_fusion_dataset():
         os.makedirs(labels_out, exist_ok=True)
 
         src_labels = os.path.join(BASE_DIR, "labels", split)
-        print(f"Копіювання лейблів для {split}...")
+        print(f"Copying labels for {split}...")
         for label_file in glob.glob(os.path.join(src_labels, "*.txt")):
             shutil.copy(label_file, labels_out)
 
-        print(f"Генерація Fusion зображень для {split}...")
+        print(f"Generating Fusion images for {split}...")
         rgb_images = glob.glob(os.path.join(RGB_DIR, split, "*.jpg"))
 
         for rgb_path in tqdm(rgb_images):
@@ -52,4 +52,4 @@ def create_fusion_dataset():
 
 if __name__ == "__main__":
     create_fusion_dataset()
-    print("✅ Датасет для Методу B готовий!")
+    print("Dataset for Method B is ready!")

@@ -50,7 +50,7 @@ def process_dataset():
 
         os.makedirs(label_dir, exist_ok=True)
 
-        print(f"Обробка {split} даних...")
+        print(f"Processing {split} data...")
         image_files = glob.glob(os.path.join(img_dir, '*.jpg'))
 
         for img_path in tqdm(image_files):
@@ -61,6 +61,6 @@ def process_dataset():
                 convert_annotation(image_id, label_dir)
 
 if __name__ == "__main__":
-    print("Починаємо конвертацію анотацій LLVIP у формат YOLO...")
+    print("Starting conversion of LLVIP annotations to YOLO format...")
     process_dataset()
-    print("Готово! Папка 'labels' створена.")
+    print("Done! 'labels' folder created.")

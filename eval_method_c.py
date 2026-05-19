@@ -48,11 +48,11 @@ def match_predictions(pred_classes, true_classes, iou, iouv):
     return torch.tensor(correct, dtype=torch.bool, device=pred_classes.device)
 
 def run_late_fusion_evaluation():
-    print(f"🚀 Запуск Методу C (Late Fusion Ensemble) з розрахунком реальних метрик...")
+    print(f"Starting Method C (Late Fusion Ensemble) with real metrics calculation...")
 
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
     if torch.cuda.is_available(): device = 'cuda'
-    print(f"💻 Використовуємо пристрій: {device}")
+    print(f"Using device: {device}")
 
     model_rgb = YOLO(RGB_MODEL_PATH)
     model_th = YOLO(THERMAL_MODEL_PATH)
@@ -152,13 +152,13 @@ def run_late_fusion_evaluation():
         metrics.process()
 
         print("-" * 30)
-        print("🏆 ФІНАЛЬНІ РЕЗУЛЬТАТИ ДЛЯ МЕТОДУ C:")
-        print(f"Тип: Late Fusion (WBF Ensemble)")
+        print("FINAL RESULTS FOR METHOD C:")
+        print(f"Type: Late Fusion (WBF Ensemble)")
         print(f"mAP50: {metrics.box.map50 * 100:.2f}%")
         print(f"mAP50-95: {metrics.box.map * 100:.2f}%")
         print("-" * 30)
     else:
-        print("❌ Помилка: Не знайдено даних для оцінки.")
+        print("Error: No data found for evaluation.")
 
 if __name__ == '__main__':
     run_late_fusion_evaluation()

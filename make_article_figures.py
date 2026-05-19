@@ -35,9 +35,9 @@ def save_channel_example() -> None:
 
     fig, axes = plt.subplots(1, 4, figsize=(13.5, 4.0), constrained_layout=True)
     panels = [
-        ("RGB кадр", rgb, None),
-        ("Thermal канал T", thermal, "inferno"),
-        ("Gray канал", gray, "gray"),
+        ("RGB frame", rgb, None),
+        ("Thermal channel T", thermal, "inferno"),
+        ("Gray channel", gray, "gray"),
         ("T-G-T tensor", tgt, None),
     ]
 
@@ -46,7 +46,7 @@ def save_channel_example() -> None:
         ax.set_title(title, fontsize=12)
         ax.axis("off")
 
-    fig.suptitle("Приклад формування Thermal-Gray-Thermal на парі LLVIP", fontsize=14)
+    fig.suptitle("Example of Thermal-Gray-Thermal formation on LLVIP pair", fontsize=14)
     fig.savefig(OUT_DIR / "fig_tgt_example.png", dpi=220)
     plt.close(fig)
 
@@ -58,8 +58,8 @@ def save_pipeline() -> None:
     ax.axis("off")
 
     boxes = [
-        (0.4, 3.0, 2.0, 1.0, "RGB\nкадр"),
-        (0.4, 1.0, 2.0, 1.0, "IR/Thermal\nкадр"),
+        (0.4, 3.0, 2.0, 1.0, "RGB\nframe"),
+        (0.4, 1.0, 2.0, 1.0, "IR/Thermal\nframe"),
         (3.1, 3.0, 2.0, 1.0, "Gray =\n0.299R+0.587G+0.114B"),
         (5.9, 2.0, 2.0, 1.0, "T-G-T\n[T, Gray, T]"),
         (8.5, 2.0, 1.8, 1.0, "YOLOv13n"),
@@ -81,7 +81,7 @@ def save_pipeline() -> None:
     for start, end in arrows:
         ax.annotate("", xy=end, xytext=start, arrowprops={"arrowstyle": "->", "lw": 1.8, "color": "#243b53"})
 
-    ax.text(6.9, 0.6, "Раннє злиття: архітектура детектора не змінюється, змінюється лише вхідний тензор.", ha="center", fontsize=11)
+    ax.text(6.9, 0.6, "Early Fusion: detector architecture remains unchanged, only the input tensor changes.", ha="center", fontsize=11)
     fig.savefig(OUT_DIR / "fig_pipeline_tgt.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 

@@ -12,14 +12,14 @@ OUTPUT_DIR = 'diploma_experiments/method_c_visuals'
 def visualize_ensemble():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    print("Завантаження моделей...")
+    print("Loading models...")
     model_rgb = YOLO(RGB_MODEL_PATH)
     model_thermal = YOLO(THERMAL_MODEL_PATH)
 
     all_images = glob.glob(os.path.join(SOURCE_IMAGES, "*.jpg"))
     selected_images = random.sample(all_images, 10)
 
-    print(f"Обробка {len(selected_images)} зображень...")
+    print(f"Processing {len(selected_images)} images...")
 
     for img_path in selected_images:
         filename = os.path.basename(img_path)
@@ -43,9 +43,9 @@ def visualize_ensemble():
 
         save_path = os.path.join(OUTPUT_DIR, filename)
         cv2.imwrite(save_path, img)
-        print(f"Збережено: {save_path}")
+        print(f"Saved to: {save_path}")
 
-    print(f"\n✅ Готово! Результати в папці: {OUTPUT_DIR}")
+    print(f"\nDone! Results in folder: {OUTPUT_DIR}")
 
 if __name__ == '__main__':
     visualize_ensemble()
