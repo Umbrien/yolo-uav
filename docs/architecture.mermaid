@@ -1,0 +1,36 @@
+sequenceDiagram
+    autonumber
+    actor UAV as БПЛА 
+    participant Prep as Підготовка
+    participant ModelA as YOLOv13-RGB
+    participant ModelTh as YOLOv13-Thermal
+    participant ModelB as YOLOv13-Early-TGT
+    participant LateFusion as Late Fusion WBF
+    participant Eval as Оцінка метрик (DetMetrics)
+
+    Note over UAV, Prep: ЕТАП 1: ЗБІР ТА ПІДГОТОВКА ДАНИХ (T-G-T)
+    UAV->>Prep: 1. Синхронізовані кадри: RGB + Infrared
+    Note over Prep: Колірне перетворення:<br>RGB -> Gray (1 канал)
+    Prep->>Prep: 2. Раннє злиття:<br>cv2.merge([IR, Gray, IR])
+    Prep-->>ModelB: 3. Запис злитих 3-канальних зображень T-G-T
+
+    Note over ModelA, ModelB: ЕТАП 2: ІНФЕРЕНС ТА ДЕТЕКЦІЯ ОБ'ЄКТІВ
+    UAV->>ModelA: 4. Вхідний кадр RGB
+    ModelA->>ModelA: 5. Детекція людей (Backbone + HyperACE)
+    ModelA-->>LateFusion: 6. RGB Прогнози: Bounding Boxes + Confidence
+
+    UAV->>ModelTh: 7. Вхідний ІЧ кадр
+    ModelTh->>ModelTh: 8. Детекція людей (Backbone + HyperACE)
+    ModelTh-->>LateFusion: 9. Thermal Прогнози: Bounding Boxes + Confidence
+
+    Prep->>ModelB: 10. Вхідний T-G-T тензор
+    ModelB->>ModelB: 11. Детекція людей (3-канальний fused вхід)
+    ModelB-->>Eval: 12. Early Fusion Прогнози
+
+    Note over LateFusion: ЕТАП 3: ПІЗНЄ ЗЛИЦТЯ (LATE FUSION)
+    LateFusion->>LateFusion: 13. Об'єднання та фільтрація прогнозів за алгоритмом WBF
+    LateFusion-->>Eval: 14. Late Fusion Прогнози 
+
+    Note over Eval: ЕТАП 4: СТАТИСТИЧНИЙ АНАЛІЗ ТА ВАЛІДАЦІЯ
+    Eval->>Eval: 15. Порівняння результатів з Ground Truth анотаціями
+    Eval->>Eval: 16. Розрахунок Precision, Recall, mAP50, mAP50-95 та FPS
