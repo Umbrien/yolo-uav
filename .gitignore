@@ -11,8 +11,12 @@ wheels/
 
 .DS_STORE
 
-# Weights 
+# Weights
 *.pt
 
 LLVIP
 
+.agents
+
+outputs
+imgs-to-test
